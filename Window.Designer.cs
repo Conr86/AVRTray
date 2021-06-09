@@ -29,6 +29,7 @@ namespace AVRTray
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.powerButton = new System.Windows.Forms.Button();
@@ -38,6 +39,8 @@ namespace AVRTray
             this.sourceSelect = new System.Windows.Forms.ComboBox();
             this.refreshButton = new System.Windows.Forms.Button();
             this.ipLabel = new System.Windows.Forms.Label();
+            this.ConnectionStatus = new System.Windows.Forms.Label();
+            this.connectionTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeField)).BeginInit();
             this.SuspendLayout();
@@ -115,18 +118,33 @@ namespace AVRTray
             // ipLabel
             // 
             this.ipLabel.AutoSize = true;
-            this.ipLabel.Location = new System.Drawing.Point(12, 262);
+            this.ipLabel.Location = new System.Drawing.Point(12, 253);
             this.ipLabel.Name = "ipLabel";
             this.ipLabel.Size = new System.Drawing.Size(65, 15);
             this.ipLabel.TabIndex = 7;
             this.ipLabel.Text = "IP Address:";
             this.ipLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ConnectionStatus
+            // 
+            this.ConnectionStatus.AutoSize = true;
+            this.ConnectionStatus.Location = new System.Drawing.Point(13, 272);
+            this.ConnectionStatus.Name = "ConnectionStatus";
+            this.ConnectionStatus.Size = new System.Drawing.Size(65, 15);
+            this.ConnectionStatus.TabIndex = 8;
+            this.ConnectionStatus.Text = "Connected";
+            this.ConnectionStatus.Click += new System.EventHandler(this.ConnectionStatus_Click);
+            // 
+            // connectionTimer
+            // 
+            this.connectionTimer.Tick += new System.EventHandler(this.connectionTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(267, 296);
+            this.Controls.Add(this.ConnectionStatus);
             this.Controls.Add(this.ipLabel);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.sourceSelect);
@@ -140,6 +158,7 @@ namespace AVRTray
             this.Text = "AVRTray";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Closing);
             this.Load += new System.EventHandler(this.Form_Load);
+            this.Click += new System.EventHandler(this.MainForm_Click);
             this.Resize += new System.EventHandler(this.Form_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeField)).EndInit();
@@ -158,6 +177,8 @@ namespace AVRTray
         private System.Windows.Forms.ComboBox sourceSelect;
         private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.Label ipLabel;
+        private System.Windows.Forms.Label ConnectionStatus;
+        private System.Windows.Forms.Timer connectionTimer;
     }
 }
 

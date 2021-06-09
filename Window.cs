@@ -13,6 +13,8 @@ namespace AVRTray
         private Size defaultSize;
         private FormBorderStyle defaultStyle;
 
+        private int timeLeft = 10;
+
         public MainForm()
         {
             AVR = new AVR();
@@ -30,6 +32,9 @@ namespace AVRTray
             };
             notifyIcon.ContextMenuStrip.Items.Add("Exit", null, (s, e) => Application.Exit());
             notifyIcon.DoubleClick += Window_Show;
+
+            connectionTimer.Interval = 1000;
+            connectionTimer.Start();
         }
 
         /// <summary>
@@ -130,5 +135,35 @@ namespace AVRTray
             sourceSelect.SelectedItem = AVR.GetSource();
         }
         #endregion
+
+        private void ConnectionStatus_Click(object sender, EventArgs e)
+        {
+            ConnectionStatus.Text = "Connected: " + AVR.IsConnected().ToString();
+        }
+
+        private void connectionTimer_Tick(object sender, EventArgs e)
+        {
+            timeLeft--;
+
+            if (timeLeft <= 0)
+            {
+                AVR.Disconnect();
+                ConnectionStatus_Click(null, null);
+
+                connectionTimer.Stop();
+                timeLeft = 10;
+            }
+        }
+
+        private void MainForm_Click(object sender, EventArgs e)
+        {
+            if (!AVR.IsConnected())
+            {
+                AVR.Connect();
+                ConnectionStatus_Click(null, null);
+
+                connectionTimer.Start();
+            }
+        }
     }
 }

@@ -40,12 +40,16 @@ namespace AVRTray
                 Connect();
         }
 
-        private bool IsConnected()
+        public bool IsConnected()
         {
             if (client == null)
                 return false;
 
             return client.Connected;
+        }
+        public void Disconnect()
+        {
+            client.Close();
         }
 
         public void Connect()
@@ -63,7 +67,7 @@ namespace AVRTray
         {
             cmd += Environment.NewLine;
 
-            if (!client.Connected) return;
+            if (!IsConnected()) Connect();
             var buf = Encoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             Debug.WriteLine($"Sent: [{ cmd.Replace(Environment.NewLine, ",") }]");
             client.GetStream().Write(buf, 0, buf.Length);
@@ -71,7 +75,7 @@ namespace AVRTray
 
         public string Read()
         {
-            if (!IsConnected()) return null;
+            if (!IsConnected()) Connect();
             StringBuilder sb = new ();
             do {
                 ParseCommmand(sb);
@@ -79,6 +83,7 @@ namespace AVRTray
                 Thread.Sleep(_readDelay);
             } while (client.Available > 0);
             Debug.WriteLine($"Received: [{ sb.ToString().Replace("\r", ",") }]");
+
             return sb.ToString();
         }
 
