@@ -104,8 +104,9 @@ namespace AVRTray
 
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
-            notifyIcon.Icon.Dispose();
-            notifyIcon.Dispose();
+            e.Cancel = true;
+            WindowState = FormWindowState.Minimized;
+            Window_Hide();
         }
 
         private void volumeBar_ValueChanged(object sender, EventArgs e)
