@@ -139,11 +139,6 @@ namespace AVRTray
         }
         #endregion
 
-        private void ConnectionStatus_Click(object sender, EventArgs e)
-        {
-            ConnectionStatus.Text = "Connected: " + AVR.IsConnected().ToString();
-        }
-
         private void connectionTimer_Tick(object sender, EventArgs e)
         {
             timeLeft--;
@@ -151,7 +146,6 @@ namespace AVRTray
             if (timeLeft <= 0)
             {
                 AVR.Disconnect();
-                ConnectionStatus_Click(null, null);
 
                 connectionTimer.Stop();
                 timeLeft = 10;
@@ -163,7 +157,6 @@ namespace AVRTray
             if (!AVR.IsConnected())
             {
                 AVR.Connect();
-                ConnectionStatus_Click(null, null);
 
                 connectionTimer.Start();
             }
