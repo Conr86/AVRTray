@@ -87,10 +87,10 @@ namespace AVRTray
             volumeBar.Value = AVR.GetVolume();
             SetPrivateControlValue(volumeField, volumeBar.Value);
             // Load custom sources into select box and set active
-            sourceSelect.Items.AddRange(AVR.CustomSources.Keys.ToArray());
+            sourceSelect.Items.AddRange(AVR.Settings.Sources.Keys.ToArray());
             sourceSelect.SelectedItem = AVR.GetSource();
             // Set IP address label
-            ipLabel.Text += $" {AVR.host}:{AVR.port}";
+            ipLabel.Text += $" {AVR.Settings.IP}:{AVR.Settings.Port}";
         }
 
         private void Form_Resize(object sender, EventArgs e)

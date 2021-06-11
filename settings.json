@@ -1,8 +1,8 @@
 ﻿{
-  "ip": "10.0.0.6",
-  "port": 23,
-  "sources": {
-    "AUX": "AUX1",
+  "IP": "10.0.0.6",
+  "Port": 23,
+  "Sources": {
+    "PC": "AUX1",
     "Turntable": "MPLAY",
     "MiniDisc": "SAT/CBL"
   }

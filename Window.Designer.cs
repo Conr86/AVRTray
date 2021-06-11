@@ -39,7 +39,6 @@ namespace AVRTray
             this.sourceSelect = new System.Windows.Forms.ComboBox();
             this.refreshButton = new System.Windows.Forms.Button();
             this.ipLabel = new System.Windows.Forms.Label();
-            this.ConnectionStatus = new System.Windows.Forms.Label();
             this.connectionTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeField)).BeginInit();
@@ -125,16 +124,6 @@ namespace AVRTray
             this.ipLabel.Text = "IP Address:";
             this.ipLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ConnectionStatus
-            // 
-            this.ConnectionStatus.AutoSize = true;
-            this.ConnectionStatus.Location = new System.Drawing.Point(13, 272);
-            this.ConnectionStatus.Name = "ConnectionStatus";
-            this.ConnectionStatus.Size = new System.Drawing.Size(65, 15);
-            this.ConnectionStatus.TabIndex = 8;
-            this.ConnectionStatus.Text = "Connected";
-            this.ConnectionStatus.Click += new System.EventHandler(this.ConnectionStatus_Click);
-            // 
             // connectionTimer
             // 
             this.connectionTimer.Tick += new System.EventHandler(this.connectionTimer_Tick);
@@ -143,8 +132,7 @@ namespace AVRTray
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(267, 296);
-            this.Controls.Add(this.ConnectionStatus);
+            this.ClientSize = new System.Drawing.Size(267, 286);
             this.Controls.Add(this.ipLabel);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.sourceSelect);
@@ -177,7 +165,6 @@ namespace AVRTray
         private System.Windows.Forms.ComboBox sourceSelect;
         private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.Label ipLabel;
-        private System.Windows.Forms.Label ConnectionStatus;
         private System.Windows.Forms.Timer connectionTimer;
     }
 }

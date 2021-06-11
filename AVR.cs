@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 namespace AVRTray
 {
+    class AVRSettings 
+    {
+        public string IP { get; set; }
+        public int Port { get; set; }
+        public Dictionary<string, string> Sources { get; set; }
+    }
     class AVR
     {
         private TcpClient client;
@@ -17,19 +25,16 @@ namespace AVRTray
             "LASTFM", "FLICKR", "FAVORITES", "IRADIO", "SERVER", "USB/IPOD", "USB", "IPD", "IRP", "FVP"
         };
 
-        // User editable (in the future)
-        public string host = "10.0.0.6";
-        public int port = 23;
-        public Dictionary<string, string> CustomSources = new()
-        {
-            { "PC", "AUX1" },
-            { "Turntable", "MPLAY" },
-            { "MiniDisc", "SAT/CBL" },
-        };
+        public AVRSettings Settings;
 
         public AVR()
         {
-            client = new TcpClient(host, port);
+            string jsonString = File.ReadAllText("settings.json");
+            Settings = JsonSerializer.Deserialize<AVRSettings>(jsonString, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            client = new TcpClient(Settings.IP, Settings.Port);
         }
 
         private void CheckConnection()
@@ -56,7 +61,7 @@ namespace AVRTray
         {
             try
             {
-                client = new TcpClient(host, port);
+                client = new TcpClient(Settings.IP, Settings.Port);
             }
             catch (Exception)
             {
@@ -191,9 +196,9 @@ namespace AVRTray
                     // Trim SI from start
                     result = result[2..];
                     // Find pretty name if it exists
-                    if (CustomSources.ContainsValue(result))
+                    if (Settings.Sources.ContainsValue(result))
                     {
-                        result = CustomSources.FirstOrDefault(x => x.Value == result).Key;
+                        result = Settings.Sources.FirstOrDefault(x => x.Value == result).Key;
                     }
                     Debug.WriteLine("Got source: " + result);
                     return result;
@@ -205,10 +210,10 @@ namespace AVRTray
 
         public void SetSource(string sourceName)
         {
-            if (CustomSources.ContainsKey(sourceName))
+            if (Settings.Sources.ContainsKey(sourceName))
             {
-                Debug.WriteLine($"Setting source to: {CustomSources[sourceName]} ({sourceName})");
-                Write("SI" + CustomSources[sourceName]);
+                Debug.WriteLine($"Setting source to: {Settings.Sources[sourceName]} ({sourceName})");
+                Write("SI" + Settings.Sources[sourceName]);
             } else
             {
                 Debug.WriteLine("Setting source to: " + sourceName);
