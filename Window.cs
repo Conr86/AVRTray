@@ -26,7 +26,7 @@ namespace AVRTray
             notifyIcon = new()
             {
                 ContextMenuStrip = new ContextMenuStrip(),
-                Icon = new Icon("./icon.ico"),
+                Icon = Properties.Resources.AppIcon,
                 Text = "AVRTray",
                 Visible = true
             };
