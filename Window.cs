@@ -30,6 +30,8 @@ namespace AVRTray
                 Text = "AVRTray",
                 Visible = true
             };
+            notifyIcon.ContextMenuStrip.Items.Add("Toggle Power", null, (s, e) => AVR.TogglePower());
+            notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
             notifyIcon.ContextMenuStrip.Items.Add("Exit", null, (s, e) => Application.Exit());
             notifyIcon.DoubleClick += Window_Show;
 
