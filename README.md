@@ -4,4 +4,6 @@ A basic Windows Forms .NET Core application for controlling any Marantz / Denon 
 
 I made this because I can never find the remote while at my desk, and the AVR is often physically blocked by a door.
 
-I'd use the Marantz HTTP-based web interface that was built into the AVR if they hadn't removed it for no reason.
+I'd use the Marantz HTTP-based web interface that was built into the AVR if they hadn't, you know, removed it for no reason.
+
+Uses a few functions borrowed from https://github.com/RickDB/DenonWeb
